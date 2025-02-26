@@ -1,0 +1,97 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода в городе</title>
+    <!-- Подключаем Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static "css/style.css" %}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center mb-4">Погода в городе</h1>
+            <!-- Форма для ввода города -->
+            <form id="weatherForm" class="mb-4" method="get">
+                <div class="input-group">
+                    <input type="text" name="city" class="form-control" placeholder="Введите город" required>
+                    <button type="submit" class="btn btn-primary">Поиск</button>
+                </div>
+            </form>
+            {% if current_weather %}
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <!-- Карточка с погодой -->
+                            <div class="weather-card">
+                                <h2 class="text-center mb-4">Погода в <span
+                                        id="cityName">{{ current_weather.city }}</span>
+                                </h2>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <!-- Иконка погоды -->
+                                    <img id="weatherIcon"
+                                         src="http://openweathermap.org/img/w/{{ current_weather.icon }}.png"
+                                         alt="Weather Icon" class="weather-icon me-3">
+                                    <!-- Температура -->
+                                    <p id="temperature" class="fs-3 mb-0">{{ current_weather.temperature }}°C</p>
+                                </div>
+                                <!-- Описание погоды -->
+                                <p id="description"
+                                   class="text-muted text-center mt-3">{{ current_weather.description|title }}, Влажность: {{ current_weather.humidity }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Ошибка:</strong> <span id="errorMessage">{{ error|capfirst }}</span>
+                </div>
+            {% endif %}
+
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <h1 class="text-center mb-4">История запросов погоды</h1>
+                        {% for city_weather in cities_weather %}
+                            <!-- Список истории запросов -->
+                            <div id="historyList">
+                            <!-- Пример элемента истории -->
+                            <div class="history-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-0">{{ city_weather.name }}</h5>
+                                        <small class="text-muted">{{ city_weather.weather_data.temperature }}°C,
+                                            {{ city_weather.weather_data.description|title }}, Влажность: {{ current_weather.humidity }}</small>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://openweathermap.org/img/wn/{{ city_weather.weather_data.icon }}@2x.png"
+                                             alt="Weather Icon"
+                                             class="weather-icon me-2">
+                                        <small class="text-muted">{{ city_weather.created|date:"d.m.Y H:i" }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!-- Другие элементы истории будут добавляться сюда -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Подключаем Bootstrap JS и зависимости -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
