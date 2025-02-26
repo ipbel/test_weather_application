@@ -43,7 +43,7 @@
                                 </div>
                                 <!-- Описание погоды -->
                                 <p id="description"
-                                   class="text-muted text-center mt-3">{{ current_weather.description|title }}, Влажность: {{ current_weather.humidity }}</p>
+                                   class="text-muted text-center mt-3">{{ current_weather.description|capfirst }}, Влажность: {{ current_weather.humidity }}%</p>
                             </div>
                         </div>
                     </div>
@@ -61,15 +61,13 @@
                     <div class="col-md-8">
                         <h1 class="text-center mb-4">История запросов погоды</h1>
                         {% for city_weather in cities_weather %}
-                            <!-- Список истории запросов -->
                             <div id="historyList">
-                            <!-- Пример элемента истории -->
                             <div class="history-item">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h5 class="mb-0">{{ city_weather.name }}</h5>
                                         <small class="text-muted">{{ city_weather.weather_data.temperature }}°C,
-                                            {{ city_weather.weather_data.description|title }}, Влажность: {{ current_weather.humidity }}</small>
+                                            {{ city_weather.weather_data.description|capfirst }}, Влажность: {{ current_weather.humidity }}%</small>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <img src="https://openweathermap.org/img/wn/{{ city_weather.weather_data.icon }}@2x.png"
@@ -80,7 +78,6 @@
                                 </div>
                             </div>
                         {% endfor %}
-                        <!-- Другие элементы истории будут добавляться сюда -->
                         </div>
                     </div>
                 </div>
