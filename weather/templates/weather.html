@@ -16,12 +16,12 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h1 class="text-center mb-4">Погода в городе</h1>
+            <h1 class="text-center mb-4">The weather in city</h1>
             <!-- Форма для ввода города -->
             <form id="weatherForm" class="mb-4" method="get">
                 <div class="input-group">
                     <input type="text" name="city" class="form-control" placeholder="Введите город" required>
-                    <button type="submit" class="btn btn-primary">Поиск</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
             {% if current_weather %}
@@ -30,7 +30,7 @@
                         <div class="col-md-6">
                             <!-- Карточка с погодой -->
                             <div class="weather-card">
-                                <h2 class="text-center mb-4">Погода в <span
+                                <h2 class="text-center mb-4">Weather in <span
                                         id="cityName">{{ current_weather.city }}</span>
                                 </h2>
                                 <div class="d-flex align-items-center justify-content-center">
@@ -56,10 +56,11 @@
                 </div>
             {% endif %}
 
+        {% if cities_weather %}
             <div class="container mt-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <h1 class="text-center mb-4">История запросов погоды</h1>
+                        <h1 class="text-center mb-4">History of weather requests</h1>
                         {% for city_weather in cities_weather %}
                             <div id="historyList">
                             <div class="history-item">
@@ -67,7 +68,7 @@
                                     <div>
                                         <h5 class="mb-0">{{ city_weather.name }}</h5>
                                         <small class="text-muted">{{ city_weather.weather_data.temperature }}°C,
-                                            {{ city_weather.weather_data.description|capfirst }}, Влажность: {{ current_weather.humidity }}%</small>
+                                            {{ city_weather.weather_data.description|capfirst }}, Humidity: {{ current_weather.humidity }}%</small>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <img src="https://openweathermap.org/img/wn/{{ city_weather.weather_data.icon }}@2x.png"
@@ -82,6 +83,7 @@
                     </div>
                 </div>
             </div>
+        {% endif %}
         </div>
     </div>
 </div>
